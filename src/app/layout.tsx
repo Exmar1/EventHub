@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Poppins } from 'next/font/google'
 import Footer from '../components/UI/footer'
-import Header from '../components/UI/header'
+import { Header } from '../components/UI/header'
 import './globals.css'
 
 const poppins = Poppins({
