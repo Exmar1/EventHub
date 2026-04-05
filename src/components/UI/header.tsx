@@ -77,9 +77,12 @@ export function Header() {
 					</div>
 
 					<div className="flex items-center gap-6">
-						<button className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition">
+						<Link
+							className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
+							href="/login"
+						>
 							Начать
-						</button>
+						</Link>
 
 						<div className="group p-2 rounded-xl border bg-[#0f172a] transition-all duration-300 hover:bg-[#1e293b] cursor-pointer">
 							<Image
