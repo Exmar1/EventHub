@@ -2,6 +2,7 @@
 
 import Logo from '@/public/Logo.svg'
 import logout from '@/public/logout.svg'
+import { signOut } from '@/src/app/actions/auth-actions'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -85,13 +86,15 @@ export function Header() {
 						</Link>
 
 						<div className="group p-2 rounded-xl border bg-[#0f172a] transition-all duration-300 hover:bg-[#1e293b] cursor-pointer">
-							<Image
-								src={logout}
-								alt="exit"
-								width={20}
-								height={20}
-								className="invert transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:rotate-12"
-							/>
+							<button onClick={signOut}>
+								<Image
+									src={logout}
+									alt="exit"
+									width={20}
+									height={20}
+									className="invert transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:rotate-12"
+								/>
+							</button>
 						</div>
 					</div>
 				</div>

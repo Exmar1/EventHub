@@ -1,9 +1,38 @@
+'use client'
+
 import TicketIllustration from '@/public/login.png'
 import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { signIn } from '../../actions/auth-actions'
 
 export default function Login() {
+	const router = useRouter()
+
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState('')
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		try {
+			setLoading(true)
+			setError('')
+
+			await signIn(email, password)
+
+			router.push('/profile')
+		} catch (error) {
+			setError('Неверный email или пароль')
+		} finally {
+			setLoading(false)
+		}
+	}
+
 	return (
 		<div className="min-h-screen bg-[#f5f7fb]">
 			<div className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
@@ -77,7 +106,10 @@ export default function Login() {
 							</p>
 						</div>
 
-						<form className="space-y-5">
+						<form
+							onSubmit={handleSubmit}
+							className="space-y-5"
+						>
 							<div>
 								<label className="mb-2 block text-sm font-medium text-slate-700">
 									Email
@@ -85,6 +117,8 @@ export default function Login() {
 
 								<input
 									type="email"
+									value={email}
+									onChange={e => setPassword(e.target.value)}
 									placeholder="Введите email"
 									className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#0b3aa8] focus:bg-white"
 								/>
@@ -97,16 +131,21 @@ export default function Login() {
 
 								<input
 									type="password"
+									value={email}
+									onChange={e => setEmail(e.target.value)}
 									placeholder="Введите пароль"
 									className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#0b3aa8] focus:bg-white"
 								/>
 							</div>
 
+							{error && <p>{error}</p>}
+
 							<button
 								type="submit"
+								disabled={loading}
 								className="mt-2 flex h-14 w-full items-center justify-center rounded-2xl bg-[#0b3aa8] text-base font-semibold text-white transition hover:bg-[#082d84]"
 							>
-								Войти
+								{loading ? 'Загрузка...' : 'Войти'}
 							</button>
 						</form>
 
