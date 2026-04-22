@@ -118,7 +118,7 @@ export default function Login() {
 								<input
 									type="email"
 									value={email}
-									onChange={e => setPassword(e.target.value)}
+									onChange={e => setEmail(e.target.value)}
 									placeholder="Введите email"
 									className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#0b3aa8] focus:bg-white"
 								/>
@@ -131,8 +131,8 @@ export default function Login() {
 
 								<input
 									type="password"
-									value={email}
-									onChange={e => setEmail(e.target.value)}
+									value={password}
+									onChange={e => setPassword(e.target.value)}
 									placeholder="Введите пароль"
 									className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#0b3aa8] focus:bg-white"
 								/>

@@ -1,9 +1,40 @@
+'use client'
+
 import TicketIllustration from '@/public/login.png'
 import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { signUp } from '../../actions/auth-actions'
 
 export default function Register() {
+	const router = useRouter()
+
+	const [loading, setLoading] = useState(false)
+	const [password, setPassword] = useState('')
+	const [email, setEmail] = useState('')
+	const [name, setName] = useState('')
+	const [error, setError] = useState('')
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		try {
+			setLoading(true)
+			setError('')
+
+			await signUp(email, password, name)
+
+			router.push('/login')
+		} catch (error) {
+			console.log(error)
+			setError(`Ошибка регистрации ${error}`)
+		} finally {
+			setLoading(false)
+		}
+	}
+
 	return (
 		<div className="min-h-screen bg-[#f5f7fb]">
 			<div className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
@@ -76,7 +107,10 @@ export default function Register() {
 							</p>
 						</div>
 
-						<form className="space-y-5">
+						<form
+							onSubmit={handleSubmit}
+							className="space-y-5"
+						>
 							<div>
 								<label className="mb-2 block text-sm font-medium text-slate-700">
 									Имя
@@ -84,6 +118,8 @@ export default function Register() {
 
 								<input
 									type="text"
+									value={name}
+									onChange={e => setName(e.target.value)}
 									placeholder="Введите имя"
 									className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#0b3aa8] focus:bg-white"
 								/>
@@ -96,6 +132,8 @@ export default function Register() {
 
 								<input
 									type="email"
+									value={email}
+									onChange={e => setEmail(e.target.value)}
 									placeholder="Введите email"
 									className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#0b3aa8] focus:bg-white"
 								/>
@@ -108,16 +146,21 @@ export default function Register() {
 
 								<input
 									type="password"
+									value={password}
+									onChange={e => setPassword(e.target.value)}
 									placeholder="Введите пароль"
 									className="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#0b3aa8] focus:bg-white"
 								/>
 							</div>
 
+							{error && <p>{error}</p>}
+
 							<button
 								type="submit"
+								disabled={loading}
 								className="mt-2 flex h-14 w-full items-center justify-center rounded-2xl bg-[#0b3aa8] text-base font-semibold text-white transition hover:bg-[#082d84]"
 							>
-								Зарегистрироваться
+								{loading ? 'Загрузка...' : 'Зарегистрироваться'}
 							</button>
 						</form>
 
