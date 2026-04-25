@@ -3,6 +3,7 @@
 import Logo from '@/public/Logo.svg'
 import logout from '@/public/logout.svg'
 import { signOut } from '@/src/app/actions/auth-actions'
+import { authClient } from '@/src/lib/auth-client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -10,6 +11,10 @@ import Modal from './Modal'
 
 export function Header() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
+
+	const { data: session, isPending } = authClient.useSession()
+
+	if (isPending) return null
 
 	const handleRedirect = () => {
 		window.location.href = 'https://t.me/Exmar1'
@@ -78,12 +83,21 @@ export function Header() {
 					</div>
 
 					<div className="flex items-center gap-6">
-						<Link
-							className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
-							href="/login"
-						>
-							Начать
-						</Link>
+						{session ? (
+							<Link
+								className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
+								href="/profile"
+							>
+								Профиль
+							</Link>
+						) : (
+							<Link
+								className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
+								href="/login"
+							>
+								Начать
+							</Link>
+						)}
 
 						<div className="group p-2 rounded-xl border bg-[#0f172a] transition-all duration-300 hover:bg-[#1e293b] cursor-pointer">
 							<button onClick={signOut}>
