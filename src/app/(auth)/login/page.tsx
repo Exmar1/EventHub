@@ -1,12 +1,12 @@
 'use client'
 
 import TicketIllustration from '@/public/login.png'
+import { authClient } from '@/src/lib/auth-client'
 import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { signIn } from '../../actions/auth-actions'
 
 export default function Login() {
 	const router = useRouter()
@@ -20,14 +20,20 @@ export default function Login() {
 		e.preventDefault()
 
 		try {
-			setLoading(true)
-			setError('')
+			const { error } = await authClient.signIn.email({
+				email,
+				password
+			})
 
-			await signIn(email, password)
+			if (error) {
+				setError('Неверный email или пароль')
+				return
+			}
 
-			router.push('/profile')
-		} catch (error) {
-			setError('Неверный email или пароль')
+			router.replace('/profile')
+			router.refresh()
+		} catch {
+			setError('Ошибка входа')
 		} finally {
 			setLoading(false)
 		}

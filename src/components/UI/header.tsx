@@ -2,22 +2,29 @@
 
 import Logo from '@/public/Logo.svg'
 import logout from '@/public/logout.svg'
-import { signOut } from '@/src/app/actions/auth-actions'
 import { authClient } from '@/src/lib/auth-client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Modal from './Modal'
 
-export function Header() {
+export default function Header() {
+	const router = useRouter()
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	const { data: session, isPending } = authClient.useSession()
-
-	if (isPending) return null
+	if (isPending) return <div>Загрузка...</div>
 
 	const handleRedirect = () => {
 		window.location.href = 'https://t.me/Exmar1'
+	}
+
+	const handleSignOut = async () => {
+		await authClient.signOut()
+
+		router.replace('/login')
+		router.refresh()
 	}
 
 	return (
@@ -57,7 +64,7 @@ export function Header() {
 									навыки собирать что-то похожее на реальный продукт на next js
 									работа с данными, UI, логика фильтрации, личный кабинет и всё
 									такое. Если коротко, это учебный проект, но сделанный так, как
-									будто его можно развивать дальше в полноценный сервис.
+									будто его можно развивать дальше в полноценнjый сервис.
 								</p>
 							</div>
 						</Modal>
@@ -69,7 +76,39 @@ export function Header() {
 						</button>
 					</nav>
 
-					<div className="absolute left-1/2 -translate-x-1/2">
+					{isPending ? null : session ? (
+						<div className="flex items-center gap-11">
+							<Link
+								className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
+								href="/profile"
+							>
+								Профиль
+							</Link>
+
+							<div className="group p-2 rounded-xl border bg-[#0f172a] transition-all duration-300 hover:bg-[#1e293b] cursor-pointer">
+								<button onClick={handleSignOut}>
+									<Image
+										src={logout}
+										alt="exit"
+										width={20}
+										height={20}
+										className="invert transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:rotate-12"
+									/>
+								</button>
+							</div>
+						</div>
+					) : (
+						<div className="flex items-center gap-6">
+							<Link
+								className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
+								href="/login"
+							>
+								Начать
+							</Link>
+						</div>
+					)}
+
+					<div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-6">
 						<Link href="/">
 							<Image
 								src={Logo}
@@ -80,36 +119,6 @@ export function Header() {
 								priority
 							/>
 						</Link>
-					</div>
-
-					<div className="flex items-center gap-6">
-						{session ? (
-							<Link
-								className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
-								href="/profile"
-							>
-								Профиль
-							</Link>
-						) : (
-							<Link
-								className="text-sm font-sans text-main font-semibold hover:text-blue-400 transition"
-								href="/login"
-							>
-								Начать
-							</Link>
-						)}
-
-						<div className="group p-2 rounded-xl border bg-[#0f172a] transition-all duration-300 hover:bg-[#1e293b] cursor-pointer">
-							<button onClick={signOut}>
-								<Image
-									src={logout}
-									alt="exit"
-									width={20}
-									height={20}
-									className="invert transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:rotate-12"
-								/>
-							</button>
-						</div>
 					</div>
 				</div>
 
