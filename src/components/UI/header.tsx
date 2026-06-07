@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { HeaderCity } from '../HeaderComponent/HeaderCity'
 import Modal from './Modal'
 
 export default function Header() {
@@ -32,12 +33,7 @@ export default function Header() {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between py-4 relative">
 					<nav className="flex gap-8 text-sm text-gray-400">
-						<a
-							href="#"
-							className="hover:text-blue-500 font-sans font-semibold text-main transition"
-						>
-							Геолокация
-						</a>
+						<HeaderCity />
 						<button
 							onClick={() => setIsModalOpen(true)}
 							className="hover:text-blue-500 font-sans font-semibold text-main transition"

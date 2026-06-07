@@ -27,7 +27,7 @@ const Footer = () => {
 							</li>
 							<li>
 								<a
-									href="https://github.com/your-username/your-repo"
+									href="https://github.com/Exmar1"
 									target="_blank"
 									rel="noreferrer"
 									className="transition hover:text-white"
@@ -152,7 +152,7 @@ const Footer = () => {
 							</li>
 							<li>
 								<a
-									href="mailto:your-email@example.com"
+									href="mailto:polevdenis74@gmail.com"
 									className="transition hover:text-white"
 								>
 									Email
