@@ -141,24 +141,88 @@ export default function Header() {
 					</div>
 
 					<div className="flex gap-3">
-						{[
-							{ label: 'Интересы', width: 'w-32' },
-							{ label: 'Дата', width: 'w-28' },
-							{ label: 'Локация', width: 'w-32' }
-						].map(filter => (
-							<button
-								key={filter.label}
-								className={`${filter.width} flex items-center justify-between px-4 py-2 rounded-lg border border-gray-100 bg-gray-50/50 text-xs font-semibold text-gray-500 hover:border-blue-200 hover:bg-white hover:text-blue-500 transition-all shadow-sm`}
+						<div className="relative">
+							<select
+								defaultValue=""
+								className="h-10 w-36 appearance-none rounded-lg border border-gray-100 bg-gray-50/50 px-4 pr-9 text-xs font-semibold text-gray-500 shadow-sm outline-none transition-all hover:border-blue-200 hover:bg-white hover:text-blue-500 focus:border-blue-300"
 							>
-								<span>{filter.label}</span>
-								<svg
-									className="w-2.5 h-2.5 ml-2 fill-current opacity-60"
-									viewBox="0 0 20 20"
+								<option
+									value=""
+									disabled
 								>
-									<path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-								</svg>
-							</button>
-						))}
+									Интересы
+								</option>
+								<option value="all">Все события</option>
+								<option value="standup">Стендап</option>
+								<option value="concerts">Концерты</option>
+								<option value="theatre">Театр</option>
+								<option value="quizzes">Квизы</option>
+								<option value="exhibitions">Выставки</option>
+								<option value="workshops">Мастер-классы</option>
+							</select>
+
+							<svg
+								className="pointer-events-none absolute right-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2 fill-gray-400"
+								viewBox="0 0 20 20"
+							>
+								<path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+							</svg>
+						</div>
+
+						<div className="relative">
+							<select
+								defaultValue=""
+								className="h-10 w-32 appearance-none rounded-lg border border-gray-100 bg-gray-50/50 px-4 pr-9 text-xs font-semibold text-gray-500 shadow-sm outline-none transition-all hover:border-blue-200 hover:bg-white hover:text-blue-500 focus:border-blue-300"
+							>
+								<option
+									value=""
+									disabled
+								>
+									Дата
+								</option>
+								<option value="any">Любая дата</option>
+								<option value="today">Сегодня</option>
+								<option value="tomorrow">Завтра</option>
+								<option value="weekend">Выходные</option>
+								<option value="week">Эта неделя</option>
+								<option value="month">Этот месяц</option>
+							</select>
+
+							<svg
+								className="pointer-events-none absolute right-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2 fill-gray-400"
+								viewBox="0 0 20 20"
+							>
+								<path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+							</svg>
+						</div>
+
+						<div className="relative">
+							<select
+								defaultValue=""
+								className="h-10 w-36 appearance-none rounded-lg border border-gray-100 bg-gray-50/50 px-4 pr-9 text-xs font-semibold text-gray-500 shadow-sm outline-none transition-all hover:border-blue-200 hover:bg-white hover:text-blue-500 focus:border-blue-300"
+							>
+								<option
+									value=""
+									disabled
+								>
+									Локация
+								</option>
+								<option value="all">Все города</option>
+								<option value="msk">Москва</option>
+								<option value="spb">Санкт-Петербург</option>
+								<option value="ekb">Екатеринбург</option>
+								<option value="kzn">Казань</option>
+								<option value="chelyabinsk">Челябинск</option>
+								<option value="sochi">Сочи</option>
+							</select>
+
+							<svg
+								className="pointer-events-none absolute right-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2 fill-gray-400"
+								viewBox="0 0 20 20"
+							>
+								<path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+							</svg>
+						</div>
 					</div>
 				</div>
 			</div>

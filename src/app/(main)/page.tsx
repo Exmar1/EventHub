@@ -1,8 +1,10 @@
 import City from '../../../public/city.jpg'
 import Card from '../../components/UI/card'
 
-export default function Home() {
+export default async function Home() {
 	const currentDate = new Date()
+
+	const res = await fetch('https://kudago.com/public-api/v1.4/events/')
 
 	return (
 		<div className="mx-auto grid w-full max-w-[1700px] grid-cols-1 gap-6 px-6 py-10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

@@ -142,7 +142,7 @@ const Footer = () => {
 							</li>
 							<li>
 								<a
-									href="https://github.com/your-username"
+									href="https://github.com/Exmar1"
 									target="_blank"
 									rel="noreferrer"
 									className="transition hover:text-white"
