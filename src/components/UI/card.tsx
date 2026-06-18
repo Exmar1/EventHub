@@ -1,13 +1,13 @@
-import { CalendarDays, Clock3, MapPin } from 'lucide-react'
+import { CalendarDays, MapPin } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 interface CardProps {
 	title: string
 	description: string
-	price: number
-	date: Date
-	time?: Date
+	price: string
+	date: string
 	location: string
 	imageUrl?: string
 	linkHref?: string
@@ -21,30 +21,18 @@ export const Card: React.FC<CardProps> = ({
 	linkHref,
 	price,
 	date,
-	time,
 	location,
 	children
 }) => {
-	const formattedDate = date.toLocaleDateString('ru-RU', {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric'
-	})
-
-	const formattedTime = time
-		? time.toLocaleTimeString('ru-RU', {
-				hour: '2-digit',
-				minute: '2-digit'
-			})
-		: null
-
 	const CardContent = (
 		<div className="group relative w-full overflow-hidden rounded-[26px] bg-[#101826] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
 			<div className="relative h-90 w-full">
 				{imageUrl ? (
-					<img
+					<Image
 						src={imageUrl}
 						alt={title}
+						width={640}
+						height={384}
 						className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 					/>
 				) : (
@@ -61,7 +49,7 @@ export const Card: React.FC<CardProps> = ({
 					<div className="max-w-[92%]">
 						<div className="mb-3 flex flex-wrap items-center gap-2">
 							<div className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-md">
-								от {price} ₽
+								{price} ₽
 							</div>
 
 							<div className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-md">
@@ -80,15 +68,8 @@ export const Card: React.FC<CardProps> = ({
 						<div className="flex flex-col gap-2 text-white/90">
 							<div className="flex items-center gap-2 text-[11px]">
 								<CalendarDays className="h-3.5 w-3.5" />
-								<span>{formattedDate}</span>
+								<span>{date}</span>
 							</div>
-
-							{formattedTime && (
-								<div className="flex items-center gap-2 text-[11px]">
-									<Clock3 className="h-3.5 w-3.5" />
-									<span>{formattedTime}</span>
-								</div>
-							)}
 
 							<div className="flex items-center gap-2 text-[11px]">
 								<MapPin className="h-3.5 w-3.5" />

@@ -1,45 +1,22 @@
-import City from '../../../public/city.jpg'
-import Card from '../../components/UI/card'
+import Card from '@/src/components/UI/card'
+import { getKudaGoEvents } from '@/src/lib/kudago'
 
 export default async function Home() {
-	const currentDate = new Date()
-
-	const res = await fetch('https://kudago.com/public-api/v1.4/events/')
+	const events = await getKudaGoEvents()
 
 	return (
-		<div className="mx-auto grid w-full max-w-[1700px] grid-cols-1 gap-6 px-6 py-10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-			<Card
-				title="Зрасте"
-				imageUrl={City.src}
-				description="Всем Hello"
-				price={2000}
-				date={currentDate}
-				location="Moscow"
-			/>
-
-			<Card
-				title="Tech Conference"
-				description="Большая конференция по технологиям и разработке"
-				price={3500}
-				date={currentDate}
-				location="Saint Petersburg"
-			/>
-
-			<Card
-				title="Music Festival"
-				description="Музыкальный фестиваль под открытым небом"
-				price={1500}
-				date={currentDate}
-				location="Kazan"
-			/>
-
-			<Card
-				title="Music Festival"
-				description="Музыкальный фестиваль под открытым небом"
-				price={1500}
-				date={currentDate}
-				location="Kazan"
-			/>
+		<div className="mx-auto grid w-full max-w-425 grid-cols-1 gap-6 px-6 py-10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+			{events.map(event => (
+				<Card
+					key={event.id}
+					title={event.title}
+					price={event.price}
+					imageUrl={event.imageUrl}
+					date={event.date}
+					location={event.location}
+					description={event.description}
+				/>
+			))}
 		</div>
 	)
 }
