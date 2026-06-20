@@ -4,6 +4,10 @@ import { getKudaGoEvents } from '@/src/lib/kudago'
 export default async function Home() {
 	const events = await getKudaGoEvents()
 
+	if (events.length === 0) {
+		return <p>Событие уже закончилось</p>
+	}
+
 	return (
 		<div className="mx-auto grid w-full max-w-425 grid-cols-1 gap-6 px-6 py-10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
 			{events.map(event => (

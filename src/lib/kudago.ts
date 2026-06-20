@@ -57,11 +57,29 @@ export async function getKudaGoEvents(): Promise<EventCardData[]> {
 
 	const data = await res.json()
 
+	console.log(data.results[0].dates)
+
+	const nowDate = new Date().toISOString().slice(0, 10)
+	const actualDate = data.dates
+
+	const hasActualDate: boolean =
+		actualDate?.some(
+			(dateItem: { start_date: string }) => dateItem.start_date >= nowDate
+		) ?? false
+
 	return data.results.map(mapKudaGoEventToCard)
 }
 
 function mapKudaGoEventToCard(event: KudaGoEvent): EventCardData {
-	const firstDate = event.dates?.[0]
+	const currentDate = new Date().toISOString().slice(0, 10)
+
+	const actualDate = event.dates?.find(dateItem => {
+		if (!dateItem.start_date) {
+			return false
+		}
+		return dateItem.start_date >= currentDate
+	})
+
 	const firstImage = event.images?.[0]
 
 	return {
@@ -70,14 +88,14 @@ function mapKudaGoEventToCard(event: KudaGoEvent): EventCardData {
 		description: event.description || 'Описание отсутствует',
 		price: event.price || 'Цена не указана',
 		location: event.location?.name || event.location?.slug || 'Город не указан',
-		date: formatEventDate(firstDate),
+		date: formatEventDate(actualDate),
 		imageUrl:
 			firstImage?.thumbnails?.['640x384'] || firstImage?.imageUrl || undefined
 	}
 }
 
 function formatEventDate(date?: KudaGoDate) {
-	if (!date) return 'Дата не указана'
+	if (!date) return 'Событие уже закончилось'
 
 	if (date.start) {
 		return new Intl.DateTimeFormat('ru-RU', {
